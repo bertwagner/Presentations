@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ShowPlanXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.6" Build="14.0.2014.14" xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtSimple StatementCompId="1" StatementEstRows="4971.75" StatementId="1" StatementOptmLevel="FULL" CardinalityEstimationModelVersion="70" StatementSubTreeCost="1285.2" StatementText="SELECT DISTINCT&#xD;&#xA;    Name,&#xD;&#xA;    FIRST_VALUE(UserId) OVER (PARTITION BY Name ORDER BY Date,UserId) AS UserId&#xD;&#xA;FROM&#xD;&#xA;    dbo.Badges b&#xD;&#xA;ORDER BY&#xD;&#xA;    Name,UserId&#xD;&#xA;OPTION (MAXDOP 1)" StatementType="SELECT" QueryHash="0x7FE188C00C61302A" QueryPlanHash="0xAD5E4E9C1EF55BBC" RetrievedFromCache="true" SecurityPolicyApplied="false">
+          <StatementSetOptions ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="true" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="true" />
+          <QueryPlan DegreeOfParallelism="0" NonParallelPlanReason="MaxDOPSetToOne" MemoryGrant="731024" CachedPlanSize="56" CompileTime="0" CompileCPU="0" CompileMemory="256">
+            <MemoryGrantInfo SerialRequiredMemory="1536" SerialDesiredMemory="818840" RequiredMemory="1536" DesiredMemory="818840" RequestedMemory="731024" GrantWaitTime="0" GrantedMemory="731024" MaxUsedMemory="730000" MaxQueryMemory="731024" />
+            <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="51200" EstimatedPagesCached="25600" EstimatedAvailableDegreeOfParallelism="1" MaxCompileMemory="2817832" />
+            <WaitStats>
+              <Wait WaitType="MEMORY_ALLOCATION_EXT" WaitTimeMs="18" WaitCount="27442" />
+              <Wait WaitType="SOS_SCHEDULER_YIELD" WaitTimeMs="24" WaitCount="12217" />
+              <Wait WaitType="ASYNC_NETWORK_IO" WaitTimeMs="35" WaitCount="12" />
+              <Wait WaitType="RESERVED_MEMORY_ALLOCATION_EXT" WaitTimeMs="192" WaitCount="91365" />
+            </WaitStats>
+            <QueryTimeStats CpuTime="55729" ElapsedTime="55855" />
+            <RelOp AvgRowSize="35" EstimateCPU="0.0953392" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="4971.75" LogicalOp="Sort" NodeId="0" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="1285.2">
+              <OutputList>
+                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                <ColumnReference Column="Expr1001" />
+              </OutputList>
+              <MemoryFractions Input="0.439252" Output="1" />
+              <RunTimeInformation>
+                <RunTimeCountersPerThread Thread="0" ActualRebinds="1" ActualRewinds="0" ActualRows="2255" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="55819" ActualCPUms="55729" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="320936" OutputMemoryGrant="729616" UsedMemoryGrant="176" />
+              </RunTimeInformation>
+              <Sort Distinct="false">
+                <OrderBy>
+                  <OrderByColumn Ascending="true">
+                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                  </OrderByColumn>
+                  <OrderByColumn Ascending="true">
+                    <ColumnReference Column="Expr1001" />
+                  </OrderByColumn>
+                </OrderBy>
+                <RelOp AvgRowSize="35" EstimateCPU="52.7976" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="4971.75" LogicalOp="Aggregate" NodeId="1" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="1285.09">
+                  <OutputList>
+                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                    <ColumnReference Column="Expr1001" />
+                  </OutputList>
+                  <MemoryFractions Input="0.00117459" Output="0.560748" />
+                  <RunTimeInformation>
+                    <RunTimeCountersPerThread Thread="0" ActualRows="2255" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="55818" ActualCPUms="55728" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="1880" OutputMemoryGrant="410080" UsedMemoryGrant="744" />
+                  </RunTimeInformation>
+                  <Hash>
+                    <DefinedValues />
+                    <HashKeysBuild>
+                      <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                      <ColumnReference Column="Expr1001" />
+                    </HashKeysBuild>
+                    <BuildResidual>
+                      <ScalarOperator ScalarString="[StackOverflow2013].[dbo].[Badges].[Name] as [b].[Name] = [StackOverflow2013].[dbo].[Badges].[Name] as [b].[Name] AND [Expr1001] = [Expr1001]">
+                        <Logical Operation="AND">
+                          <ScalarOperator>
+                            <Compare CompareOp="IS">
+                              <ScalarOperator>
+                                <Identifier>
+                                  <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                </Identifier>
+                              </ScalarOperator>
+                              <ScalarOperator>
+                                <Identifier>
+                                  <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                </Identifier>
+                              </ScalarOperator>
+                            </Compare>
+                          </ScalarOperator>
+                          <ScalarOperator>
+                            <Compare CompareOp="IS">
+                              <ScalarOperator>
+                                <Identifier>
+                                  <ColumnReference Column="Expr1001" />
+                                </Identifier>
+                              </ScalarOperator>
+                              <ScalarOperator>
+                                <Identifier>
+                                  <ColumnReference Column="Expr1001" />
+                                </Identifier>
+                              </ScalarOperator>
+                            </Compare>
+                          </ScalarOperator>
+                        </Logical>
+                      </ScalarOperator>
+                    </BuildResidual>
+                    <RelOp AvgRowSize="35" EstimateCPU="0.804201" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="8042010" LogicalOp="Compute Scalar" NodeId="2" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="1232.29">
+                      <OutputList>
+                        <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                        <ColumnReference Column="Expr1001" />
+                      </OutputList>
+                      <ComputeScalar>
+                        <DefinedValues>
+                          <DefinedValue>
+                            <ColumnReference Column="Expr1001" />
+                            <ScalarOperator ScalarString="CASE WHEN IsFalseOrNull [Expr1002] THEN [Expr1003] ELSE NULL END">
+                              <IF>
+                                <Condition>
+                                  <ScalarOperator>
+                                    <Logical Operation="IsFalseOrNull">
+                                      <ScalarOperator>
+                                        <Identifier>
+                                          <ColumnReference Column="Expr1002" />
+                                        </Identifier>
+                                      </ScalarOperator>
+                                    </Logical>
+                                  </ScalarOperator>
+                                </Condition>
+                                <Then>
+                                  <ScalarOperator>
+                                    <Identifier>
+                                      <ColumnReference Column="Expr1003" />
+                                    </Identifier>
+                                  </ScalarOperator>
+                                </Then>
+                                <Else>
+                                  <ScalarOperator>
+                                    <Const ConstValue="NULL" />
+                                  </ScalarOperator>
+                                </Else>
+                              </IF>
+                            </ScalarOperator>
+                          </DefinedValue>
+                        </DefinedValues>
+                        <RelOp AvgRowSize="59" EstimateCPU="5.05038" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="8042010" LogicalOp="Aggregate" NodeId="3" Parallel="false" PhysicalOp="Stream Aggregate" EstimatedTotalSubtreeCost="1231.49">
+                          <OutputList>
+                            <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                            <ColumnReference Column="Expr1002" />
+                            <ColumnReference Column="Expr1003" />
+                          </OutputList>
+                          <RunTimeInformation>
+                            <RunTimeCountersPerThread Thread="0" ActualRows="8042005" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="52890" ActualCPUms="52800" />
+                          </RunTimeInformation>
+                          <StreamAggregate>
+                            <DefinedValues>
+                              <DefinedValue>
+                                <ColumnReference Column="Expr1002" />
+                                <ScalarOperator ScalarString="FIRST_VALUE_IS_NULL([StackOverflow2013].[dbo].[Badges].[UserId] as [b].[UserId])">
+                                  <Aggregate AggType="FIRST_VALUE_IS_NULL" Distinct="false">
+                                    <ScalarOperator>
+                                      <Identifier>
+                                        <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                      </Identifier>
+                                    </ScalarOperator>
+                                  </Aggregate>
+                                </ScalarOperator>
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Column="Expr1003" />
+                                <ScalarOperator ScalarString="FIRST_VALUE_IGNORE_NULLS([StackOverflow2013].[dbo].[Badges].[UserId] as [b].[UserId])">
+                                  <Aggregate AggType="FIRST_VALUE_IGNORE_NULLS" Distinct="false">
+                                    <ScalarOperator>
+                                      <Identifier>
+                                        <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                      </Identifier>
+                                    </ScalarOperator>
+                                  </Aggregate>
+                                </ScalarOperator>
+                              </DefinedValue>
+                            </DefinedValues>
+                            <GroupBy>
+                              <ColumnReference Column="WindowCount1006" />
+                            </GroupBy>
+                            <RelOp AvgRowSize="59" EstimateCPU="17.6763" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="16084000" LogicalOp="Window Spool" NodeId="4" Parallel="false" PhysicalOp="Window Spool" EstimatedTotalSubtreeCost="1226.44">
+                              <OutputList>
+                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                <ColumnReference Column="WindowCount1006" />
+                                <ColumnReference Column="Segment1004" />
+                                <ColumnReference Column="Segment1005" />
+                              </OutputList>
+                              <RunTimeInformation>
+                                <RunTimeCountersPerThread Thread="0" ActualRows="16084010" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="49877" ActualCPUms="49787" />
+                              </RunTimeInformation>
+                              <WindowSpool>
+                                <RelOp AvgRowSize="59" EstimateCPU="0" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="8042010" LogicalOp="Segment" NodeId="5" Parallel="false" PhysicalOp="Segment" EstimatedTotalSubtreeCost="1206.74">
+                                  <OutputList>
+                                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                    <ColumnReference Column="Segment1004" />
+                                    <ColumnReference Column="Segment1005" />
+                                  </OutputList>
+                                  <RunTimeInformation>
+                                    <RunTimeCountersPerThread Thread="0" ActualRows="8042005" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="12771" ActualCPUms="12771" />
+                                  </RunTimeInformation>
+                                  <Segment>
+                                    <GroupBy>
+                                      <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                      <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                      <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                    </GroupBy>
+                                    <SegmentColumn>
+                                      <ColumnReference Column="Segment1005" />
+                                    </SegmentColumn>
+                                    <RelOp AvgRowSize="51" EstimateCPU="0.505038" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="8042010" LogicalOp="Segment" NodeId="6" Parallel="false" PhysicalOp="Segment" EstimatedTotalSubtreeCost="1206.74">
+                                      <OutputList>
+                                        <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                        <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                        <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                        <ColumnReference Column="Segment1004" />
+                                      </OutputList>
+                                      <RunTimeInformation>
+                                        <RunTimeCountersPerThread Thread="0" ActualRows="8042005" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="11638" ActualCPUms="11637" />
+                                      </RunTimeInformation>
+                                      <Segment>
+                                        <GroupBy>
+                                          <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                        </GroupBy>
+                                        <SegmentColumn>
+                                          <ColumnReference Column="Segment1004" />
+                                        </SegmentColumn>
+                                        <RelOp AvgRowSize="43" EstimateCPU="380.027" EstimateIO="780.721" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="8042010" LogicalOp="Sort" NodeId="7" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="1206.24">
+                                          <OutputList>
+                                            <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                            <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                            <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                          </OutputList>
+                                          <Warnings>
+                                            <SpillToTempDb SpillLevel="1" SpilledThreadCount="1" />
+                                            <SortSpillDetails GrantedMemoryKb="730000" UsedMemoryKb="730000" WritesToTempDb="40473" ReadsFromTempDb="40473" />
+                                          </Warnings>
+                                          <MemoryFractions Input="1" Output="0.998825" />
+                                          <RunTimeInformation>
+                                            <RunTimeCountersPerThread Thread="0" ActualRebinds="1" ActualRewinds="0" ActualRows="8042005" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="10944" ActualCPUms="10944" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="40473" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="730000" OutputMemoryGrant="728752" UsedMemoryGrant="730000" />
+                                          </RunTimeInformation>
+                                          <Sort Distinct="false">
+                                            <OrderBy>
+                                              <OrderByColumn Ascending="true">
+                                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                              </OrderByColumn>
+                                              <OrderByColumn Ascending="true">
+                                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                              </OrderByColumn>
+                                              <OrderByColumn Ascending="true">
+                                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                              </OrderByColumn>
+                                            </OrderBy>
+                                            <RelOp AvgRowSize="43" EstimateCPU="8.84636" EstimateIO="36.6424" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="8042010" EstimatedRowsRead="8042010" LogicalOp="Clustered Index Scan" NodeId="8" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="45.4887" TableCardinality="8042010">
+                                              <OutputList>
+                                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                                <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                              </OutputList>
+                                              <RunTimeInformation>
+                                                <RunTimeCountersPerThread Thread="0" ActualRows="8042005" ActualRowsRead="8042005" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="750" ActualCPUms="750" ActualScans="1" ActualLogicalReads="49649" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+                                              </RunTimeInformation>
+                                              <IndexScan Ordered="false" ForcedIndex="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+                                                <DefinedValues>
+                                                  <DefinedValue>
+                                                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Name" />
+                                                  </DefinedValue>
+                                                  <DefinedValue>
+                                                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="UserId" />
+                                                  </DefinedValue>
+                                                  <DefinedValue>
+                                                    <ColumnReference Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Alias="[b]" Column="Date" />
+                                                  </DefinedValue>
+                                                </DefinedValues>
+                                                <Object Database="[StackOverflow2013]" Schema="[dbo]" Table="[Badges]" Index="[PK_Badges_Id]" Alias="[b]" IndexKind="Clustered" Storage="RowStore" />
+                                              </IndexScan>
+                                            </RelOp>
+                                          </Sort>
+                                        </RelOp>
+                                      </Segment>
+                                    </RelOp>
+                                  </Segment>
+                                </RelOp>
+                              </WindowSpool>
+                            </RelOp>
+                          </StreamAggregate>
+                        </RelOp>
+                      </ComputeScalar>
+                    </RelOp>
+                  </Hash>
+                </RelOp>
+              </Sort>
+            </RelOp>
+          </QueryPlan>
+        </StmtSimple>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>
