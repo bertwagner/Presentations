@@ -1,3 +1,4 @@
+--53:30
 USE StackOverflow2013;
 GO
 SET STATISTICS IO,TIME ON;

@@ -1,11 +1,20 @@
 ﻿/* 
     What is a SQL Injection Homoglyph Attack?
     More information available here: 
-        - https://bertwagner.com/2017/09/12/how-unicode-homoglyphs-can-thwart-your-database-security/ */
+        - https://bertwagner.com/2017/09/12/how-unicode-homoglyphs-can-thwart-your-database-security/
         - https://bertwagner.com/category/sql-injection/
 */
 
-USE StackOverflow2010;
+DROP TABLE IF EXISTS #Users;
+CREATE TABLE #Users
+(
+	Id int,
+	DisplayName varchar(100),
+	CreationDate datetime2
+);
+INSERT INTO  #Users VALUES (1,'BertWagner', '2010-10-04');
+INSERT INTO  #Users VALUES (2,'SuperDude89', '2010-11-01');
+INSERT INTO  #Users VALUES (3,'WonderWomanCodes', '2010-02-28');
 GO
 
 /* Create a procedure that builds and executes a dynamic query */
@@ -22,7 +31,7 @@ BEGIN
                     DisplayName,
                     CreationDate
 				FROM
-					dbo.Users
+					#Users
 				WHERE
 					DisplayName = ''' + @DisplayName + '''
 					';
@@ -33,7 +42,6 @@ GO
 
 EXEC dbo.GetProfile_Injectable @DisplayName = N'BertWagner';
 EXEC dbo.GetProfile_Injectable @DisplayName = N' '' OR 1=1--';
-
 
 /* Oh no! Let's write our own security function from preventing this from happening */
 DROP PROCEDURE IF EXISTS dbo.GetProfile_PartiallySecure
@@ -52,7 +60,7 @@ BEGIN
                     DisplayName,
                     CreationDate
 				FROM
-					dbo.Users
+					#Users
 				WHERE
 					DisplayName = ''' + @DisplayName + '''
 					';
@@ -60,6 +68,7 @@ BEGIN
 	EXEC(@Query);
 END;
 GO
+
 
 EXEC dbo.GetProfile_PartiallySecure @DisplayName = N'BertWagner';
 EXEC dbo.GetProfile_PartiallySecure @DisplayName = N' '' OR 1=1--';
@@ -85,7 +94,7 @@ BEGIN
                     DisplayName,
                     CreationDate
 				FROM
-					dbo.Users
+					#Users
 				WHERE
 					DisplayName = @DisplayName 
 					';
@@ -101,3 +110,5 @@ GO
 EXEC dbo.GetProfile_Secure @DisplayName = N'BertWagner';
 EXEC dbo.GetProfile_Secure @DisplayName = N' '' OR 1=1--';
 EXEC dbo.GetProfile_Secure @DisplayName = N' ʼ OR 1=1--'; 
+
+

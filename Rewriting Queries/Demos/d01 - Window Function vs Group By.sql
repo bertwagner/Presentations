@@ -1,5 +1,6 @@
 USE StackOverflow2013;
 GO
+
 SET STATISTICS IO, TIME ON;
 
 /* Blog: https://bertwagner.com/2019/04/16/window-functions-vs-group-bys/ */
